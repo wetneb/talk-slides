@@ -1,0 +1,19 @@
+#pdfscreen
+{
+    background: grey;
+    height: 450px;
+    width: 600px;
+}
+
+#thumbnails
+{
+    width: 600px;
+    overflow: auto;
+}
+
+#pdfscreen img
+{
+    width: 600px;
+    height: 450px;
+}
+
