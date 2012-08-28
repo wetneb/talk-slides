@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>Affichage d'un PDF</title>
+    <script type='text/javascript'>
+             var confId="transp";
+             var nbSlides=18;
+
+            function loadThumbnails()
+            {
+                var elem = document.getElementById('thumbnails-row');
+                var elemContent = '';
+                for (var i = 0; (i < nbSlides); i++)
+                {
+                    elemContent += '<td><a onClick="displaySlide('+i+')"><img src="'+confId+'-small-'+i+'.png" /></a></td>';
+                }
+                elem.innerHTML = elemContent;
+            } 
+
+             function displaySlide(index)
+             {
+                 document.getElementById('pdfscreen').innerHTML='<img src="transp-big-'+index+'.png" alt="Slide '+(index+1)+'" />';
+             }
+        </script>
+    </head>
+    <body>
+        <h2>Affichage d'un PDF</h2>
+
+        <p><button onClick="loadThumbnails()">Display thumbnails</button></p>
+        <div id="thumbnails" height="100" width="500" style="overflow: auto">
+            <table>
+                <tr id="thumbnails-row" />
+            </table>
+        </div> 
+        <div id="pdfscreen" height="600" width="800" background-color="grey" />
+    </body>
+</html>
