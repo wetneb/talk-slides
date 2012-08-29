@@ -4,7 +4,7 @@ function loadThumbnails()
     var elemContent = '';
     for (var i = 0; (i < nbSlides); i++)
     {
-        elemContent += '<td><a onClick="displaySlide('+i+')"><img src="'+confId+'-small-'+i+'.png" /></a></td>';
+        elemContent += '<td><a onClick="displaySlide('+i+')"><img src="talks/'+confId+'/small-'+i+'.png" /></a></td>';
     }
     elem.innerHTML = elemContent;
 }
@@ -24,7 +24,7 @@ function setupPopcorn()
 {
     // Parse le XML pour obtenir les correspondances
     xmlhttp = new XMLHttpRequest();  
-    xmlhttp.open('GET', 'marques-'+confId+'.xml', true);
+    xmlhttp.open('GET', 'talks/'+confId+'/marks.xml', true);
     xmlhttp.send();
     xmlhttp.onreadystatechange=function()
     {

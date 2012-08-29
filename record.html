@@ -15,7 +15,7 @@
                 dateObject = new Date();
                 var secs = dateObject.getTime() - initTime;
                 document.getElementById('pdfscreen').innerHTML =
-                    '<img src="'+confId+'-big-'+index+'.png" alt="Slide '+(index+1)+'" />';
+                    '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
                 document.outputForm.xmlOutput.value +=
                     '<point time="'+(secs / 1000)+'" slide="'+index+'" />\n';
             }
@@ -27,8 +27,8 @@
 
             document.addEventListener('DOMContentLoaded', function () {loadThumbnails(); displaySlide(0); }, false);
         </script>
-        <script src="talk-slides.js"></script>
-        <link rel="stylesheet" type="text/css" href="talk-slides.css" />
+        <script src="src/talk-slides.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
     </head>
     <body>
          <div id="slides">
