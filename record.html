@@ -2,14 +2,15 @@
 <html>
     <head>
         <title>Enregistrement</title>
+        <meta charset="UTF-8" />
         <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
         <script src="prototype.js"></script>
         <script type="text/javascript">
-            var confId = "transp";
-            var nbSlides = 18;
+            var confId = "dulong-opendata";
+            var nbSlides = 33;
             var dateObject = new Date();
             var initTime= dateObject.getTime();
-
+            
             function displaySlide(index)
             {
                 dateObject = new Date();
@@ -20,14 +21,19 @@
                     '<point time="'+(secs / 1000)+'" slide="'+index+'" />\n';
             }
 
-            function nextSlide()
-            {
-                
-            }
 
-            document.addEventListener('DOMContentLoaded', function () {loadThumbnails(); displaySlide(0); }, false);
         </script>
         <script src="src/talk-slides.js"></script>
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function ()
+                    {
+                 loadThumbnails();
+                 displaySlide(0);
+                 var pop = Popcorn('#talkVideo');
+                 pop.code({ start: 0.2, onStart: function (options)
+                     { var myDateObject = new Date(); initTime = myDateObject.getTime(); } });
+             }, false);
+         </script>
         <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
     </head>
     <body>
@@ -40,10 +46,10 @@
             </div>
         </div>
         <div id="rightside">
-            <h3>Complexité de Kolmogorov et compression de Huffman</h3>
-            <h4>Antonin Delpeuch, 6 juillet 2012</h4>
+            <h3>Enregistrement</h3>
+            <h4>Fabelier</h4>
             <video id="talkVideo" controls>
-                <source src="http://localhost:8000/flux.ogg" /> 
+                <source src="videos/dulong-opendata.ogg" /> 
             </video>
         </div>
         <form name="outputForm">

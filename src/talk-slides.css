@@ -28,3 +28,16 @@
     padding-top: 25px;
 }
 
+#talkVideo
+{
+    height: 360px;
+    width: 480px;
+}
+
+h3
+{
+    font-family: "times";
+    font-size: 1.5em;
+}
+
+
