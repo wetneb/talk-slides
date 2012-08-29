@@ -1,24 +1,36 @@
 <!doctype html>
 <html>
     <head>
-        <title>Affichage d'un PDF</title>
+        <title>Enregistrement</title>
         <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
         <script src="prototype.js"></script>
         <script type="text/javascript">
             var confId = "transp";
             var nbSlides = 18;
-            var loadPopcorn = true;
+            var dateObject = new Date();
+            var initTime= dateObject.getTime();
 
             function displaySlide(index)
             {
+                dateObject = new Date();
+                var secs = dateObject.getTime() - initTime;
                 document.getElementById('pdfscreen').innerHTML =
                     '<img src="'+confId+'-big-'+index+'.png" alt="Slide '+(index+1)+'" />';
+                document.outputForm.xmlOutput.value +=
+                    '<point time="'+(secs / 1000)+'" slide="'+index+'" />\n';
             }
+
+            function nextSlide()
+            {
+                
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {loadThumbnails(); displaySlide(0); }, false);
         </script>
         <script src="talk-slides.js"></script>
         <link rel="stylesheet" type="text/css" href="talk-slides.css" />
     </head>
-    <body onload="loadThumbnails(); displaySlide(0); startPopcorn();">
+    <body>
          <div id="slides">
             <div id="pdfscreen"></div>
             <div id="thumbnails"> 
@@ -31,9 +43,11 @@
             <h3>Complexité de Kolmogorov et compression de Huffman</h3>
             <h4>Antonin Delpeuch, 6 juillet 2012</h4>
             <video id="talkVideo" controls>
-                <source src="video.ogg" /> 
+                <source src="http://localhost:8000/flux.ogg" /> 
             </video>
         </div>
-
+        <form name="outputForm">
+        <textarea name="xmlOutput"></textarea>
+        </form>
     </body>
 </html>
