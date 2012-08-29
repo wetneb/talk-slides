@@ -4,88 +4,25 @@
         <title>Affichage d'un PDF</title>
         <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
         <script src="prototype.js"></script>
+        <script src="talk-slides.js"></script>
         <link rel="stylesheet" type="text/css" href="talk-slides.css" />
-    <script type='text/javascript'>
-             var confId="transp";
-             var nbSlides=18;
-
-            function loadThumbnails()
-            {
-                var elem = document.getElementById('thumbnails-row');
-                var elemContent = '';
-                for (var i = 0; (i < nbSlides); i++)
-                {
-                    elemContent += '<td><a onClick="displaySlide('+i+')"><img src="'+confId+'-small-'+i+'.png" /></a></td>';
-                }
-                elem.innerHTML = elemContent;
-            }
-
-            function scrollThumbnails(index)
-            {
-                document.getElementById('thumbnails').scrollLeft= Math.max(133.33333 * (index-1), 0);
-            }
-
-             function displaySlide(index)
-             {
-                 document.getElementById('pdfscreen').innerHTML=
-                     '<img src="transp-big-'+index+'.png" alt="Slide '+(index+1)+'" />';
-             }
-
-            function displaySlideWrapper()
-            {
-                displaySlide(this);
-                scrollThumbnails(this);
-            }
-
-            function setupPopcorn()
-            {
-                // Parse le XML pour obtenir les correspondances
-                xmlhttp = new XMLHttpRequest();  // fuck IE5, IE6
-                xmlhttp.open('GET', 'marques-'+confId+'.xml', true);
-                xmlhttp.send();
-                xmlhttp.onreadystatechange=function()
-                {
-                    if (xmlhttp.readyState==4)
-                    {
-                        xmldoc = xmlhttp.responseXML;
-                 
-                        var points = xmldoc.getElementsByTagName('point');
-                
-                        // Initialise Popcorn
-                        var pop = Popcorn('#talkVideo');
-
-                        // Register callbacks
-                        for(i = 0; i < points.length; i++)
-                        {
-                            var slideId = points[i].getAttribute('slide');
-                            var eventTime = points[i].getAttribute('time');
-                            pop.code({
-                                    start: eventTime,
-                                    onStart: displaySlideWrapper.bind(slideId)
-                                    });
-                        }
-                    }
-                };                
-            }
-
-            // Code honteusement pompé dans une démo de Popcorn JS (Popcorn 101)
-            document.addEventListener("DOMContentLoaded", function () { 
-                    setupPopcorn();
-                    }, false);
-        </script>
     </head>
-    <body onload="loadThumbnails()">
-        <h2>Affichage d'un PDF</h2>
+    <body onload="loadThumbnails(); displaySlide(0);">
+         <div id="slides">
+            <div id="pdfscreen"></div>
+            <div id="thumbnails"> 
+                <table>
+                    <tr id="thumbnails-row" />
+                </table>
+            </div>
+        </div>
+        <div id="rightside">
+            <h3>Complexité de Kolmogorov et compression de Huffman</h3>
+            <h4>Antonin Delpeuch, 6 juillet 2012</h4>
+            <video id="talkVideo" controls>
+                <source src="video.ogg" /> 
+            </video>
+        </div>
 
-        <video id="talkVideo" controls>
-            <source src="video.mp4" />
-            <source src="video.webm" /> 
-        </video>
-        <div id="thumbnails"> 
-            <table>
-                <tr id="thumbnails-row" />
-            </table>
-        </div> 
-        <div id="pdfscreen" />
     </body>
 </html>

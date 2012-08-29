@@ -17,3 +17,14 @@
     height: 450px;
 }
 
+#slides
+{
+    float: left;
+    margin: 30px;
+}
+
+#rightside
+{
+    padding-top: 25px;
+}
+
