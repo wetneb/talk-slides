@@ -2,17 +2,15 @@
 <html>
     <head>
         <title>Creative Commons and scientific data - Fabelier</title>
+        <meta charset="UTF-8" />
         <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
         <script src="libs/prototype.js"></script>
         <script type="text/javascript">
             var confId = "dulong-opendata";
             var nbSlides = 33;
-
-            function displaySlide(index)
-            {
-                document.getElementById('pdfscreen').innerHTML =
-                    '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
-            }
+            var currentSlide = -1;
+            
+            function onDisplaySlide(index) { }
         </script>
         <script src="src/talk-slides.js"></script>
         <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />

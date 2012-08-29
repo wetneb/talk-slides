@@ -1,10 +1,26 @@
+function displaySlide(index)
+{
+    document.getElementById('pdfscreen').innerHTML =
+        '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
+    document.getElementById('thumbnail-'+index).style.border = '2px solid black';
+    if(currentSlide != -1)
+    {
+        document.getElementById('thumbnail-'+currentSlide).style.border = '2px solid white';
+    }
+    currentSlide = index;
+
+    onDisplaySlide(index);
+}
+
 function loadThumbnails()
 {
     var elem = document.getElementById('thumbnails-row');
     var elemContent = '';
     for (var i = 0; (i < nbSlides); i++)
     {
-        elemContent += '<td><a onClick="displaySlide('+i+')"><img src="talks/'+confId+'/small-'+i+'.png" /></a></td>';
+        elemContent += '<td><a onClick="displaySlide('+i
+            +')"><img src="talks/'+confId+'/small-'+i
+            +'.png" id="thumbnail-'+i+'" style="border: 2px solid white;" /></a></td>';
     }
     elem.innerHTML = elemContent;
 }

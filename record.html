@@ -8,20 +8,17 @@
         <script type="text/javascript">
             var confId = "dulong-opendata";
             var nbSlides = 33;
+            var currentSlide = -1;
             var dateObject = new Date();
             var initTime= dateObject.getTime();
             
-            function displaySlide(index)
+            function onDisplaySlide(index)
             {
                 dateObject = new Date();
                 var secs = dateObject.getTime() - initTime;
-                document.getElementById('pdfscreen').innerHTML =
-                    '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
                 document.outputForm.xmlOutput.value +=
                     '<point time="'+(secs / 1000)+'" slide="'+index+'" />\n';
             }
-
-
         </script>
         <script src="src/talk-slides.js"></script>
         <script type="text/javascript">
