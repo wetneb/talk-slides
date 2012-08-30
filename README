@@ -3,5 +3,7 @@ This project provides a small web interface to play a video of a talk with the a
 It uses HTML5, CSS, Javascript, Popcorn JS, prototype.js.
 No Flash, nothing in the cloud.
 
+An instance is running (during developpement) here : http://antonin.delpeuch.eu/talk-slides
+
 It is licensed under GPL v3.
 
