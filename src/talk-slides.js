@@ -52,7 +52,7 @@ function setupPopcorn()
     
             // Initialise Popcorn
             var pop = Popcorn('#talkVideo');
-
+            
             // Register callbacks
             for(i = 0; i < points.length; i++)
             {
@@ -70,6 +70,7 @@ function setupPopcorn()
 // Code honteusement pompé dans une démo de Popcorn JS (Popcorn 101)
 function startPopcorn()
 {
+    alert('startPopcorn()');
 document.addEventListener("DOMContentLoaded", function () {
         setupPopcorn();
         }, false);

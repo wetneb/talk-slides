@@ -3,7 +3,7 @@
     <head>
         <title>Creative Commons and scientific data - Fabelier</title>
         <meta charset="UTF-8" />
-        <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+        <script src="libs/popcorn-complete.min.js"></script>
         <script src="libs/prototype.js"></script>
         <script type="text/javascript">
             var confId = "dulong-opendata";
@@ -15,7 +15,7 @@
         <script src="src/talk-slides.js"></script>
         <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
     </head>
-    <body onload="loadThumbnails(); displaySlide(0); startPopcorn();">
+    <body onload="loadThumbnails(); displaySlide(0); setupPopcorn();">
          <div id="slides">
             <div id="pdfscreen"></div>
             <div id="thumbnails"> 
@@ -31,6 +31,7 @@
                 <source src="videos/dulong-opendata.ogg" /> 
             </video>
         </div>
-
+        <div id="footer">
+        </div>
     </body>
 </html>
