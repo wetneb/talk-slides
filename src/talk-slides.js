@@ -3,7 +3,7 @@ function displaySlide(index)
     document.getElementById('pdfscreen').innerHTML =
         '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
     document.getElementById('thumbnail-'+index).style.border = '2px solid black';
-    if(currentSlide != -1)
+    if(currentSlide != -1 && currentSlide != index)
     {
         document.getElementById('thumbnail-'+currentSlide).style.border = '2px solid white';
     }
@@ -58,10 +58,17 @@ function setupPopcorn()
             {
                 var slideId = points[i].getAttribute('slide');
                 var eventTime = points[i].getAttribute('time');
+                var endTime = pop.duration();
+                if(i != points.length - 1)
+                {
+                    endTime = points[i+1].getAttribute('time');
+                }
+                
                 pop.code({
                         start: eventTime,
+                        end: endTime,
                         onStart: displaySlideWrapper.bind(slideId)
-                        });
+                        });               
             }
         }
     };                
@@ -70,7 +77,6 @@ function setupPopcorn()
 // Code honteusement pompé dans une démo de Popcorn JS (Popcorn 101)
 function startPopcorn()
 {
-    alert('startPopcorn()');
 document.addEventListener("DOMContentLoaded", function () {
         setupPopcorn();
         }, false);

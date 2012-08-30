@@ -3,21 +3,23 @@
     <head>
         <title>Enregistrement</title>
         <meta charset="UTF-8" />
-        <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+        <script src="libs/popcorn-complete.min.js"></script>
         <script src="prototype.js"></script>
         <script type="text/javascript">
-            var confId = "dulong-opendata";
+            var confId = "keller-comptheory";
             var nbSlides = 33;
             var currentSlide = -1;
-            var dateObject = new Date();
-            var initTime= dateObject.getTime();
-            
+            var pop = 0;
+
             function onDisplaySlide(index)
             {
-                dateObject = new Date();
-                var secs = dateObject.getTime() - initTime;
+                var secs = 0;
+                if(pop != 0)
+                {
+                    secs = pop.roundTime();
+                }
                 document.outputForm.xmlOutput.value +=
-                    '<point time="'+(secs / 1000)+'" slide="'+index+'" />\n';
+                    '<point time="'+ secs +'" slide="'+index+'" />\n';
             }
         </script>
         <script src="src/talk-slides.js"></script>
@@ -26,10 +28,8 @@
                     {
                  loadThumbnails();
                  displaySlide(0);
-                 var pop = Popcorn('#talkVideo');
-                 pop.code({ start: 0.2, onStart: function (options)
-                     { var myDateObject = new Date(); initTime = myDateObject.getTime(); } });
-             }, false);
+                 pop = Popcorn('#talkVideo');
+                    }, false);
          </script>
         <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
     </head>
@@ -46,7 +46,7 @@
             <h3>Enregistrement</h3>
             <h4>Fabelier</h4>
             <video id="talkVideo" controls>
-                <source src="videos/dulong-opendata-1.ogg.ogv" /> 
+                <source src="videos/keller-comptheory.ogg" /> 
             </video>
         </div>
         <form name="outputForm">
