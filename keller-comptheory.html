@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Simulating the brain - Fabelier</title>
+        <meta charset="UTF-8" />
+        <script src="libs/popcorn-complete.min.js"></script>
+        <script src="libs/prototype.js"></script>
+        <script type="text/javascript">
+            var confId = "keller-comptheory";
+            var nbSlides = 15;
+            var currentSlide = -1;
+            
+            function onDisplaySlide(index) { }
+        </script>
+        <script src="src/talk-slides.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
+    </head>
+    <body onload="loadThumbnails(); displaySlide(0); setupPopcorn();">
+         <div id="slides">
+            <div id="pdfscreen"></div>
+            <div id="thumbnails"> 
+                <table>
+                    <tr id="thumbnails-row" />
+                </table>
+            </div>
+        </div>
+        <div id="rightside">
+            <h3>Simulating the brain</h3>
+            <h4>Joaquín Keller, June 27, 2012</h4>
+            <video id="talkVideo" poster="img/screen.png" controls>
+                <source src="videos/keller-comptheory.ogg" /> 
+            </video>
+        </div>
+
+    </body>
+</html>
