@@ -36,6 +36,11 @@ function displaySlideWrapper()
     scrollThumbnails(this);
 }
 
+function preloadImage()
+{
+    new Image().src = 'talks/'+confId+'/big-'+this+'.png';
+}
+
 function setupPopcorn()
 {
     // Parse le XML pour obtenir les correspondances
@@ -68,7 +73,15 @@ function setupPopcorn()
                         start: eventTime,
                         end: endTime,
                         onStart: displaySlideWrapper.bind(slideId)
-                        });               
+                        });
+
+                if(i > 0)
+                {
+                    pop.code({
+                        start: Math.max(eventTime-4, 0),
+                        onStart: preloadImage.bind(slideId)
+                        });
+                }            
             }
         }
     };                
