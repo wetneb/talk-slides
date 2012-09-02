@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Live @ fabelier</title>
+        <meta charset="UTF-8" />
+        <script src="libs/popcorn-complete.min.js"></script>
+        <script src="libs/prototype.js"></script>
+        <script type="text/javascript">
+            var confId = "";
+            var nbSlides = 0;
+            var currentSlide = -1;
+            
+            function onDisplaySlide(index) { }
+        </script>
+        <script src="src/talk-slides.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
+    </head>
+    <body onload="loadThumbnails(); getLiveSlides()">
+         <div id="slides">
+            <div id="pdfscreen"></div>
+            <div id="thumbnails"> 
+                <table>
+                    <tr id="thumbnails-row" />
+                </table>
+            </div>
+        </div>
+        <div id="rightside">
+            <h3 id="title">Live @ fabelier</h3>
+            <h4 id="author"></h4>
+            <video id="talkVideo" poster="img/screen.png" controls>
+                <source src="http://localhost:8000/live.ogg" /> 
+            </video>
+        </div>
+
+    </body>
+</html>
