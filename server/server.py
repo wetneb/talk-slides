@@ -6,10 +6,11 @@ class SlideContext:
 
     def __init__(self):
         self.slideIdx = 0 
-        self.confId = "noconf"
-        self.nbSlides = 1
-        self.title = "Live @ fabelier"
-        self.author = ""
+        self.confId = "keller-comptheory"
+        self.nbSlides = 5
+        self.title = "Live @ fabelier (updated)"
+        self.author = "team"
+        self.videoURI = "http://localhost:8000/live.ogg"
         self.waitingCallbacks = []
 
     def currentSlide(self):
@@ -43,7 +44,9 @@ class LiveHandler(tornado.web.RequestHandler):
                      "\", \"currentSlide\": \""+str(ctxt.currentSlide())+
                      "\", \"nbSlides\": \""+str(ctxt.nbSlides)+
                      "\", \"title\": \""+ctxt.title+
-                     "\", \"author\": \""+ctxt.author+" }")
+                     "\", \"author\": \""+ctxt.author+
+                     "\", \"videoURI\": \""+ctxt.videoURI+
+                     "\" }")
             self.finish()
         elif command == "incr":
             self.db["context"].incrSlide()

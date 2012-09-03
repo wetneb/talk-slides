@@ -5,19 +5,28 @@
         <meta charset="UTF-8" />
         <script src="libs/popcorn-complete.min.js"></script>
         <script src="libs/prototype.js"></script>
+        <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
         <script type="text/javascript">
             var confId = "";
             var nbSlides = 0;
             var currentSlide = -1;
             var title = "";
             var author = "";
+            var videoURI = "http://localhost:8000/live.ogg";
 
             function onDisplaySlide(index) { }
         </script>
         <script src="src/talk-slides.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                    getLiveSlides();
+                    loadThumbnails();
+                    //waitForSlideChange();
+                    });
+        </script>
         <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
     </head>
-    <body onload="getLiveSlides(); loadThumbnails()">
+    <body>
          <div id="slides">
             <div id="pdfscreen"></div>
             <div id="thumbnails"> 
@@ -29,9 +38,11 @@
         <div id="rightside">
             <h3 id="title">Live @ fabelier</h3>
             <h4 id="author"></h4>
-            <video id="talkVideo" poster="img/screen.png" controls>
-                <source src="http://localhost:8000/live.ogg" /> 
-            </video>
+            <div id="vid">
+                <video id="talkVideo" poster="img/screen.png" controls>
+                    <source src="http://localhost:8000/live.ogg" /> 
+                </video>
+            </div>
         </div>
 
     </body>

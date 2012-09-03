@@ -15,9 +15,11 @@ function displaySlide(index)
 function loadThumbnails()
 {
     var elem = document.getElementById('thumbnails-row');
+    alert('Found the element');
     var elemContent = '';
     for (var i = 0; (i < nbSlides); i++)
     {
+        alert('Hey '+i);
         elemContent += '<td><a onClick="displaySlide('+i
             +')"><img src="talks/'+confId+'/small-'+i
             +'.png" id="thumbnail-'+i+'" style="border: 2px solid white;" /></a></td>';
@@ -41,6 +43,46 @@ function preloadImage()
     new Image().src = 'talks/'+confId+'/big-'+this+'.png';
 }
 
+function updateInterface()
+{
+    document.getElementById('title').innerHTML = title;
+    document.getElementById('author').innerHTML = author;
+
+    document.getElementById('vid').innerHTML =
+     '          <video id="talkVideo" poster="img/screen.png" controls>\n'+
+     '               <source src="'+videoURI+'" />\n' +
+     '           </video>\n';
+
+}
+
+long_xhr = new XMLHttpRequest();
+
+function waitForSlideChange()
+{
+    if(currentSlide != -2)
+    {
+        if(long_xhr.readyState == 4)
+        {
+            var newSlide = long_xhr.response;
+            alert('Got response: '+newSlide);
+            if(newSlide >= 0)
+            {
+               //displaySlide(newSlide);
+            }
+            currentSlide = newSlide;
+            alert('New state : '+long_xhr.readyState);
+        }
+
+        if(long_xhr.readyState == 4 || long_xhr.readyState == 0)
+        {
+            alert('Started a new request');
+            long_xhr.open('GET', 'live/waitNext', true);
+            long_xhr.send();
+            long_xhr.onreadystatechange=waitForSlideChange;
+        }
+    }
+}
+
 function getLiveSlides()
 {
     // Get initial config
@@ -57,27 +99,11 @@ function getLiveSlides()
             newSlide = obj.currentSlide;
             title = obj.title;
             author = obj.author;
+            
+            updateInterface();
 
             if(newSlide >= 0)
                 displaySlide(newSlide);
-        }
-    }
-
-    // Wait for new slides
-    while(currentSlide != -2 && false)
-    {
-        xmlhttp.open('GET', 'live/waitNext', true);
-        xmlhttp.send();
-        xmlhttp.onreadystatechange=function()
-        {
-            if(xmlhttp.readyState == 4)
-            {
-                var newSlide = xmlhttp.response
-                if(newSlide >= 0)
-                    displaySlide(newSlide)
-                else
-                    currentSlide = newSlide
-            }
         }
     }
 }
