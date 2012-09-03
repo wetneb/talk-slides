@@ -5,7 +5,11 @@ import sys
 class SlideContext:
 
     def __init__(self):
-        self.slideIdx = -1
+        self.slideIdx = 0 
+        self.confId = "noconf"
+        self.nbSlides = 1
+        self.title = "Live @ fabelier"
+        self.author = ""
         self.waitingCallbacks = []
 
     def currentSlide(self):
@@ -33,8 +37,13 @@ class LiveHandler(tornado.web.RequestHandler):
         self.db = db
 
     def get(self, command):
-        if command == "currentSlide":
-            self.write(str(self.db["context"].currentSlide()))
+        if command == "status":
+            ctxt = self.db["context"]
+            self.write("{ \"confId\": \""+ctxt.confId+
+                     "\", \"currentSlide\": \""+str(ctxt.currentSlide())+
+                     "\", \"nbSlides\": \""+str(ctxt.nbSlides)+
+                     "\", \"title\": \""+ctxt.title+
+                     "\", \"author\": \""+ctxt.author+" }")
             self.finish()
         elif command == "incr":
             self.db["context"].incrSlide()
@@ -49,21 +58,9 @@ class LiveHandler(tornado.web.RequestHandler):
             self.write(str(self.db["context"].currentSlide()))
             self.finish()
 
-class RegularHandler(tornado.web.RequestHandler):
-    def get(self, filename):
-        try:
-            print("Opening www/"+filename)
-            f = open("www/"+filename)
-            print("Done")
-            self.write(f.read())
-        except IOError as e:
-            raise tornado.web.HTTPError(404)
-
-
-
 application = tornado.web.Application([
     (r"/live/(.*)", LiveHandler, dict(db = dict(context = context))),
-    (r"/(.*)", RegularHandler, dict()),
+    (r"/(.*)", tornado.web.StaticFileHandler, dict(path = "www")),
 ])
 
 if __name__ == "__main__":

@@ -41,6 +41,47 @@ function preloadImage()
     new Image().src = 'talks/'+confId+'/big-'+this+'.png';
 }
 
+function getLiveSlides()
+{
+    // Get initial config
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.open('GET', 'live/status', true);
+    xmlhttp.send();
+    xmlhttp.onreadystatechange=function()
+    {
+        if(xmlhttp.readyState == 4)
+        {
+            obj = eval('(' + xmlhttp.response + ')');
+            confId = obj.confId;
+            nbSlides = obj.nbSlides;
+            newSlide = obj.currentSlide;
+            title = obj.title;
+            author = obj.author;
+
+            if(newSlide >= 0)
+                displaySlide(newSlide);
+        }
+    }
+
+    // Wait for new slides
+    while(currentSlide != -2 && false)
+    {
+        xmlhttp.open('GET', 'live/waitNext', true);
+        xmlhttp.send();
+        xmlhttp.onreadystatechange=function()
+        {
+            if(xmlhttp.readyState == 4)
+            {
+                var newSlide = xmlhttp.response
+                if(newSlide >= 0)
+                    displaySlide(newSlide)
+                else
+                    currentSlide = newSlide
+            }
+        }
+    }
+}
+
 function setupPopcorn()
 {
     // Parse le XML pour obtenir les correspondances

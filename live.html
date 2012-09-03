@@ -9,13 +9,15 @@
             var confId = "";
             var nbSlides = 0;
             var currentSlide = -1;
-            
+            var title = "";
+            var author = "";
+
             function onDisplaySlide(index) { }
         </script>
         <script src="src/talk-slides.js"></script>
         <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
     </head>
-    <body onload="loadThumbnails(); getLiveSlides()">
+    <body onload="getLiveSlides(); loadThumbnails()">
          <div id="slides">
             <div id="pdfscreen"></div>
             <div id="thumbnails"> 
