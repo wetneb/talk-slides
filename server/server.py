@@ -18,6 +18,7 @@ class SlideContext:
 
     def setSlide(self, idx):
         self.slideIdx = idx
+        print('Waiting clients : '+str(len(self.waitingCallbacks)))
         for cb in self.waitingCallbacks:
             cb()
         self.waitingCallbacks = []
@@ -26,7 +27,12 @@ class SlideContext:
         self.setSlide(self.slideIdx+1)
 
     def registerWaiter(self, cb):
-        self.waitingCallbacks += [cb]
+        print('Appending client')
+        self.waitingCallbacks.append(cb)
+
+    def forgetWaiter(self, cb):
+        print('Removing client')
+        self.waitingCallbacks.remove(cb)
 
 
 context = SlideContext()
@@ -36,6 +42,7 @@ class LiveHandler(tornado.web.RequestHandler):
 
     def initialize(self, db):
         self.db = db
+        self.registered = False
 
     def get(self, command):
         if command == "status":
@@ -54,12 +61,18 @@ class LiveHandler(tornado.web.RequestHandler):
             self.finish()
         elif command == "waitNext":
             self.db["context"].registerWaiter(self.slideChanged)
+            self.registered = True
         else:
             self.write("Unknown command")
 
+    def on_finnish():
+        if self.registered:
+            self.db["context"].forgetWaiter(self.slideChanged)
+
     def slideChanged(self):
-            self.write(str(self.db["context"].currentSlide()))
-            self.finish()
+        self.registered = False
+        self.write(str(self.db["context"].currentSlide()))
+        self.finish()
 
 application = tornado.web.Application([
     (r"/live/(.*)", LiveHandler, dict(db = dict(context = context))),
