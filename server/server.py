@@ -64,6 +64,7 @@ class LiveHandler(tornado.web.RequestHandler):
             self.registered = True
         else:
             self.write("Unknown command")
+            self.finish()
 
     def on_finnish():
         if self.registered:

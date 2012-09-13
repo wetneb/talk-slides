@@ -2,11 +2,13 @@ function displaySlide(index)
 {
     document.getElementById('pdfscreen').innerHTML =
         '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
+    /*
     document.getElementById('thumbnail-'+index).style.border = '2px solid black';
     if(currentSlide != -1 && currentSlide != index)
     {
         document.getElementById('thumbnail-'+currentSlide).style.border = '2px solid white';
     }
+    */
     currentSlide = index;
 
     onDisplaySlide(index);
@@ -15,11 +17,9 @@ function displaySlide(index)
 function loadThumbnails()
 {
     var elem = document.getElementById('thumbnails-row');
-    alert('Found the element');
     var elemContent = '';
     for (var i = 0; (i < nbSlides); i++)
     {
-        alert('Hey '+i);
         elemContent += '<td><a onClick="displaySlide('+i
             +')"><img src="talks/'+confId+'/small-'+i
             +'.png" id="thumbnail-'+i+'" style="border: 2px solid white;" /></a></td>';
@@ -57,6 +57,14 @@ function updateInterface()
 
 long_xhr = new XMLHttpRequest();
 
+function respawnPolling()
+{
+    long_xhr = new XMLHttpRequest();
+    long_xhr.open('GET', 'live/waitNext', true);
+    long_xhr.send();
+    long_xhr.onreadystatechange=waitForSlideChange;
+}
+
 function waitForSlideChange()
 {
     if(currentSlide != -2)
@@ -64,21 +72,18 @@ function waitForSlideChange()
         if(long_xhr.readyState == 4)
         {
             var newSlide = long_xhr.response;
-            alert('Got response: '+newSlide);
+            
             if(newSlide >= 0)
             {
-               //displaySlide(newSlide);
+               displaySlide(newSlide);
             }
             currentSlide = newSlide;
-            alert('New state : '+long_xhr.readyState);
+            respawnPolling();
         }
-
-        if(long_xhr.readyState == 4 || long_xhr.readyState == 0)
+        
+        if(long_xhr.readyState == 0)
         {
-            alert('Started a new request');
-            long_xhr.open('GET', 'live/waitNext', true);
-            long_xhr.send();
-            long_xhr.onreadystatechange=waitForSlideChange;
+            respawnPolling();
         }
     }
 }
