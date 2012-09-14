@@ -18,7 +18,6 @@ class SlideContext:
 
     def setSlide(self, idx):
         self.slideIdx = idx
-        print('Waiting clients : '+str(len(self.waitingCallbacks)))
         for cb in self.waitingCallbacks:
             cb()
         self.waitingCallbacks = []
@@ -27,11 +26,9 @@ class SlideContext:
         self.setSlide(self.slideIdx+1)
 
     def registerWaiter(self, cb):
-        print('Appending client')
         self.waitingCallbacks.append(cb)
 
     def forgetWaiter(self, cb):
-        print('Removing client')
         self.waitingCallbacks.remove(cb)
 
 
@@ -65,10 +62,16 @@ class LiveHandler(tornado.web.RequestHandler):
         else:
             self.write("Unknown command")
             self.finish()
-
-    def on_finnish():
+    
+    def unregisterWaiter(self):
         if self.registered:
             self.db["context"].forgetWaiter(self.slideChanged)
+    
+    def on_finnish():
+        self.unregisterWaiter()
+
+    def on_connection_close(self):
+        self.unregisterWaiter() 
 
     def slideChanged(self):
         self.registered = False
