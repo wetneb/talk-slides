@@ -2,13 +2,12 @@ function displaySlide(index)
 {
     document.getElementById('pdfscreen').innerHTML =
         '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
-    /*
     document.getElementById('thumbnail-'+index).style.border = '2px solid black';
     if(currentSlide != -1 && currentSlide != index)
     {
         document.getElementById('thumbnail-'+currentSlide).style.border = '2px solid white';
     }
-    */
+    
     currentSlide = index;
 
     onDisplaySlide(index);
@@ -55,28 +54,34 @@ function updateInterface()
 
 }
 
-long_xhr = new XMLHttpRequest();
+// Long polling
 
-function serverIsRunning()
+long_xhr = new XMLHttpRequest();
+ping_xhr = new XMLHttpRequest();
+
+function testServerRunning()
 {
-    val retval = False;
+    alert('Ping');
     ping_xhr = new XMLHttpRequest();
     ping_xhr.open('GET', 'live/ping', true);
-    ping_xhr.timeout = 3000;
     ping_xhr.send();
-    ping_xh.onreadystatechange = function () {
-        if(long_xhr.readyState == 4 && ping_xhr.response == "pong")
-            retval = True;
-    }
-    // tbc
-}
+    ping_xhr.onreadystatechange=respawnPolling();
+}    
 
 function respawnPolling()
 {
-    long_xhr = new XMLHttpRequest();
-    long_xhr.open('GET', 'live/waitNext', true);
-    long_xhr.send();
-    long_xhr.onreadystatechange=waitForSlideChange;
+    if(ping_xhr.readyState == 4)
+    {
+        alert('Pong');
+        if(ping_xhr.response == 'pong')
+        {
+    alert('Respawn');
+            long_xhr = new XMLHttpRequest();
+            long_xhr.open('GET', 'live/waitNext', true);
+            long_xhr.send();
+            long_xhr.onreadystatechange=waitForSlideChange;
+        }
+    }
 }
 
 function waitForSlideChange()
@@ -92,12 +97,12 @@ function waitForSlideChange()
                displaySlide(newSlide);
             }
             currentSlide = newSlide;
-            respawnPolling();
+            testServerRunning();
         }
         
         if(long_xhr.readyState == 0)
         {
-            respawnPolling();
+            testServerRunning();
         }
     }
 }
@@ -122,7 +127,10 @@ function getLiveSlides()
             updateInterface();
 
             if(newSlide >= 0)
+            {
+                loadThumbnails();
                 displaySlide(newSlide);
+            }
         }
     }
 }
