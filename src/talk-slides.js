@@ -57,6 +57,20 @@ function updateInterface()
 
 long_xhr = new XMLHttpRequest();
 
+function serverIsRunning()
+{
+    val retval = False;
+    ping_xhr = new XMLHttpRequest();
+    ping_xhr.open('GET', 'live/ping', true);
+    ping_xhr.timeout = 3000;
+    ping_xhr.send();
+    ping_xh.onreadystatechange = function () {
+        if(long_xhr.readyState == 4 && ping_xhr.response == "pong")
+            retval = True;
+    }
+    // tbc
+}
+
 function respawnPolling()
 {
     long_xhr = new XMLHttpRequest();

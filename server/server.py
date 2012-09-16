@@ -59,6 +59,9 @@ class LiveHandler(tornado.web.RequestHandler):
         elif command == "waitNext":
             self.db["context"].registerWaiter(self.slideChanged)
             self.registered = True
+        elif command == "ping":
+            self.write("pong")
+            self.finish()
         else:
             self.write("Unknown command")
             self.finish()
