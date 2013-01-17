@@ -35,6 +35,10 @@
     height: 360px;
     width: 480px;
 }
+#no_broadcast
+{
+    text-align: center;
+}
 
 h3
 {

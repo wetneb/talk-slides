@@ -122,7 +122,9 @@ function getLiveSlides()
             nbSlides = obj.nbSlides;
             newSlide = obj.currentSlide;
             title = obj.title;
-            
+            author = obj.author;
+            running = (obj.running == 'True');
+
             updateInterface();
 
             if(running)
