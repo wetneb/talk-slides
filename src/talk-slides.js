@@ -3,7 +3,7 @@ function displaySlide(index)
     document.getElementById('pdfscreen').innerHTML =
         '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
     document.getElementById('thumbnail-'+index).style.border = '2px solid black';
-    if(currentSlide != -1 && currentSlide != index)
+    if(running && currentSlide != index)
     {
         document.getElementById('thumbnail-'+currentSlide).style.border = '2px solid white';
     }
@@ -39,7 +39,10 @@ function displaySlideWrapper()
 
 function preloadImage()
 {
+    if(this != "")
+    {
     new Image().src = 'talks/'+confId+'/big-'+this+'.png';
+    }
 }
 
 function updateInterface()
@@ -61,7 +64,6 @@ ping_xhr = new XMLHttpRequest();
 
 function testServerRunning()
 {
-    alert('Ping');
     ping_xhr = new XMLHttpRequest();
     ping_xhr.open('GET', 'live/ping', true);
     ping_xhr.send();
@@ -72,10 +74,8 @@ function respawnPolling()
 {
     if(ping_xhr.readyState == 4)
     {
-        alert('Pong');
         if(ping_xhr.response == 'pong')
         {
-    alert('Respawn');
             long_xhr = new XMLHttpRequest();
             long_xhr.open('GET', 'live/waitNext', true);
             long_xhr.send();
@@ -86,7 +86,7 @@ function respawnPolling()
 
 function waitForSlideChange()
 {
-    if(currentSlide != -2)
+    if(running)
     {
         if(long_xhr.readyState == 4)
         {
@@ -123,6 +123,7 @@ function getLiveSlides()
             newSlide = obj.currentSlide;
             title = obj.title;
             author = obj.author;
+            running = obj.running;
             
             updateInterface();
 
