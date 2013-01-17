@@ -135,7 +135,7 @@ function getLiveSlides()
             else
             {
                 document.getElementById('main_frame').innerHTML =
-                    '<p id="no_broadcast">No conference is currently broadcasted.</p>';
+                    '<br /><br /><br /><br /><br /><p id="no_broadcast">No conference is currently broadcasted.</p>';
             }
         }
     }
