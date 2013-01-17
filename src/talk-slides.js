@@ -3,7 +3,7 @@ function displaySlide(index)
     document.getElementById('pdfscreen').innerHTML =
         '<img src="talks/'+confId+'/big-'+index+'.png" alt="Slide '+(index+1)+'" />';
     document.getElementById('thumbnail-'+index).style.border = '2px solid black';
-    if(running && currentSlide != index)
+    if(currentSlide != index && currentSlide != -1)
     {
         document.getElementById('thumbnail-'+currentSlide).style.border = '2px solid white';
     }

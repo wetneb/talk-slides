@@ -59,29 +59,36 @@ class LiveHandler(tornado.web.RequestHandler):
             self.db["context"].incrSlide()
             self.write("Incremented.\nNew value is "+str(self.db["context"].currentSlide()))
             self.finish()
-        elif command == "set":
-            self.db["context"].slideIdx = self.get_argument("i",self.db["context"].slideIdx)
-            self.write(str(self.db["context"].currentSlide()))
-            self.finish()
         elif command == "waitNext":
             self.db["context"].registerWaiter(self.slideChanged)
             self.registered = True
         elif command == "ping":
             self.write("pong")
             self.finish()
+        elif command == "end":
+            self.db["context"].running = False
+            self.finish()
         else:
-            self.write("Unknown command")
+            self.write("Unknown command : "+command)
             self.finish()
 
     def post(self, command):
         if command == "new":
+            ctxt = SlideContext()
             ctxt.confId = self.get_argument("conf_id", "new_conf")
-            ctxt.currentSlide = 0
+            ctxt.slideIdx = 0
             ctxt.nbSlides = self.get_argument("nb_slides", 1)
             ctxt.title = self.get_argument("title", "New conference")
             ctxt.author = self.get_argument("author", "The author")
             ctxt.videoURI = live_video_URI
             ctxt.running = True
+            self.db["context"] = ctxt
+            self.write("Conference successfully started.")
+            self.finish()
+        elif command == "set":
+            self.db["context"].setSlide(self.get_argument("i",self.db["context"].slideIdx))
+            self.write(str(self.db["context"].currentSlide()))
+            self.finish()
     
     def unregisterWaiter(self):
         if self.registered:
@@ -104,6 +111,6 @@ application = tornado.web.Application([
 ])
 
 if __name__ == "__main__":
-    application.listen(8888)
+    application.listen(80)
     tornado.ioloop.IOLoop.instance().start()
 

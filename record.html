@@ -10,6 +10,7 @@
             var nbSlides = 33;
             var currentSlide = -1;
             var pop = 0;
+            var set_xhr = new XMLHttpRequest();
 
             function onDisplaySlide(index)
             {
@@ -20,6 +21,11 @@
                 }
                 document.outputForm.xmlOutput.value +=
                     '<point time="'+ secs +'" slide="'+index+'" />\n';
+                set_xhr = new XMLHttpRequest();
+                set_xhr.open('POST', 'live/set', true);
+                set_xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                set_xhr.send('i='+encodeURIComponent(currentSlide));
+                alert("Request sent");
             }
         </script>
         <script src="src/talk-slides.js"></script>
