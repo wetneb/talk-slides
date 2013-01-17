@@ -122,15 +122,18 @@ function getLiveSlides()
             nbSlides = obj.nbSlides;
             newSlide = obj.currentSlide;
             title = obj.title;
-            author = obj.author;
-            running = obj.running;
             
             updateInterface();
 
-            if(newSlide >= 0)
+            if(running)
             {
                 loadThumbnails();
                 displaySlide(newSlide);
+            }
+            else
+            {
+                document.getElementById('main_frame').innerHTML =
+                    '<p id="no_broadcast">No conference is currently broadcasted.</p>';
             }
         }
     }
