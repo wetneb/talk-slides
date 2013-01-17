@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+    <head>
+        <title>New conference</title>
+        <meta charset="UTF-8" />
+        <script src="libs/popcorn-complete.min.js"></script>
+        <script src="libs/prototype.js"></script>
+        <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="src/talk-slides.css" />
+    </head>
+    <body>
+        <h2>New conference</h2>
+        <p>
+            <form action="live/new" method="post" autocomplete="on">
+                Title : <input type="text" name="title" /><br />
+                Author : <input type="text" name="author" /><br />
+                Short name : <input type="text" name="conf_id" /><br />
+                Number of slides : <input type="text" name="nb_slides" /><br />
+                <input type="submit" />
+            </form>
+        </p>
+    </body>
+</html>
+
